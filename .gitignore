@@ -1,0 +1,10 @@
+**__pycache__
+model/
+log/
+data/
+checkpoints/
+visualization/model/
+visualization/checkpoints/
+visualization/data/
+./*.ipynb
+./nohup.out

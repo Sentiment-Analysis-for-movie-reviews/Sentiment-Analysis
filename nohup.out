@@ -1,0 +1,54 @@
+[I 10:00:28.444 NotebookApp] [jupyter_nbextensions_configurator] enabled 0.4.1
+[I 10:00:28.445 NotebookApp] Serving notebooks from local directory: /home/pesante/study/Sentiment_A/Sentiment-Analysis
+[I 10:00:28.445 NotebookApp] Jupyter Notebook 6.4.6 is running at:
+[I 10:00:28.445 NotebookApp] http://localhost:9990/
+[I 10:00:28.445 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 10:00:37.708 NotebookApp] 302 GET / (127.0.0.1) 0.520000ms
+[W 11:21:03.787 NotebookApp] Notebook Untitled.ipynb is not trusted
+[W 11:21:03.805 NotebookApp] 404 GET /nbextensions/pydeck/extension.js?v=20230228100028 (127.0.0.1) 3.980000ms referer=http://127.0.0.1:1234/notebooks/Untitled.ipynb
+[W 11:21:03.934 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20230228100028 (127.0.0.1) 1.060000ms referer=http://127.0.0.1:1234/notebooks/Untitled.ipynb
+[I 11:21:03.941 NotebookApp] Kernel started: d6b711d4-6ea9-4027-9e2b-591f6baf77ae, name: python3
+[I 11:23:03.959 NotebookApp] Saving file at /Untitled.ipynb
+[W 11:23:03.959 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 11:43:11.233 NotebookApp] Starting buffering for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:5176103c41b347a78901ae03a44de4c8
+[I 11:43:12.659 NotebookApp] Restoring connection for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:5176103c41b347a78901ae03a44de4c8
+[W 11:44:42.660 NotebookApp] WebSocket ping timeout after 90001 ms.
+[I 11:44:47.663 NotebookApp] Starting buffering for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:5176103c41b347a78901ae03a44de4c8
+[I 15:37:02.157 NotebookApp] 302 GET / (127.0.0.1) 0.440000ms
+[W 15:37:05.537 NotebookApp] Notebook Untitled.ipynb is not trusted
+[W 15:37:05.553 NotebookApp] 404 GET /nbextensions/pydeck/extension.js?v=20230228100028 (127.0.0.1) 1.870000ms referer=http://127.0.0.1:1234/notebooks/Untitled.ipynb
+[W 15:37:05.718 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20230228100028 (127.0.0.1) 1.220000ms referer=http://127.0.0.1:1234/notebooks/Untitled.ipynb
+[I 15:39:05.724 NotebookApp] Saving file at /Untitled.ipynb
+[W 15:39:05.725 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 15:41:05.707 NotebookApp] Saving file at /Untitled.ipynb
+[W 15:41:05.707 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 16:27:05.704 NotebookApp] Saving file at /Untitled.ipynb
+[W 16:27:05.705 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 16:59:05.704 NotebookApp] Saving file at /Untitled.ipynb
+[W 16:59:05.705 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 17:01:05.699 NotebookApp] Saving file at /Untitled.ipynb
+[W 17:01:05.700 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 17:03:05.702 NotebookApp] Saving file at /Untitled.ipynb
+[W 17:03:05.702 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 17:14:01.460 NotebookApp] Starting buffering for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:18dce217ee1d496c9b255d68e0c387f1
+[I 17:14:04.410 NotebookApp] Restoring connection for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:18dce217ee1d496c9b255d68e0c387f1
+[W 17:15:34.413 NotebookApp] WebSocket ping timeout after 90002 ms.
+[I 17:15:39.417 NotebookApp] Starting buffering for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:18dce217ee1d496c9b255d68e0c387f1
+[I 21:54:12.353 NotebookApp] 302 GET / (127.0.0.1) 0.450000ms
+[I 21:54:12.395 NotebookApp] 302 GET /tree? (127.0.0.1) 0.620000ms
+[I 21:54:13.985 NotebookApp] 302 POST /login?next=%2Ftree%3F (127.0.0.1) 30.790000ms
+[W 21:54:16.031 NotebookApp] Notebook Untitled.ipynb is not trusted
+[W 21:54:16.055 NotebookApp] 404 GET /nbextensions/pydeck/extension.js?v=20230228100028 (127.0.0.1) 1.780000ms referer=http://127.0.0.1:1234/notebooks/Untitled.ipynb
+[W 21:54:16.377 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20230228100028 (127.0.0.1) 1.660000ms referer=http://127.0.0.1:1234/notebooks/Untitled.ipynb
+[I 00:18:16.746 NotebookApp] Saving file at /Untitled.ipynb
+[W 00:18:16.747 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 00:20:16.359 NotebookApp] Saving file at /Untitled.ipynb
+[W 00:20:16.359 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 00:20:43.747 NotebookApp] Saving file at /Untitled.ipynb
+[W 00:20:43.748 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 00:20:44.207 NotebookApp] Saving file at /Untitled.ipynb
+[W 00:20:44.208 NotebookApp] Notebook Untitled.ipynb is not trusted
+[I 00:22:16.302 NotebookApp] Saving file at /Untitled.ipynb
+[W 00:22:16.302 NotebookApp] Notebook Untitled.ipynb is not trusted
+[W 00:30:46.363 NotebookApp] WebSocket ping timeout after 119956 ms.
+[I 00:30:51.367 NotebookApp] Starting buffering for d6b711d4-6ea9-4027-9e2b-591f6baf77ae:4012cffcf2d14d5788f21ed20f9564b6
