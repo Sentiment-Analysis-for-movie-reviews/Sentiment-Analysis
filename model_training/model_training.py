@@ -18,7 +18,7 @@ from transformers import AdamW, get_linear_schedule_with_warmup
 
 import numpy as np
 from sklearn.metrics import f1_score
-
+import os
 import random
 
 import streamlit as st
@@ -27,12 +27,14 @@ import streamlit as st
 
 
 epochs = 10
-# filepath = './smile-annotations-final.csv'
 filepath = './../data/Black_dataset.csv'
 
 
 def get_df(filepath: str) -> pd.DataFrame:
     # Task 1: Exploratory Data Analysis and Preprocessing
+    if not os.path.exists(filepath):
+        print("Path Error, Please make sure input right path of dataset")
+        exit()
     df = pd.read_csv(filepath,
         names=['id', 'category', 'text'])
 
@@ -278,7 +280,10 @@ def training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=Non
             scheduler.step()
             
             progress_bar.set_postfix({'training_loss': '{:.3f}'.format(loss.item()/len(batch))})
-        
+
+        if not os.path.exists('./../checkpoints/'):
+            os.makedirs('./../checkpoints')
+
         torch.save(model.state_dict(), f'./../checkpoints/Bert_ft_epoch{epoch}.model')
         
         tqdm.write(f'\nEpoch {epoch}')
@@ -293,6 +298,8 @@ def training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=Non
         tqdm.write(f'F1 score (weighted): {val_f1}')
         if val_f1 > best_F1:
             best_F1 = val_f1
+            if not os.path.exists('./../model/'):
+                os.makedirs('./../model')
             torch.save(model.state_dict(), f'./../model/Best_eval.model')
 
 
