@@ -30,7 +30,7 @@ def get_sentiment(epoch: int, file: UploadFile = File(...)):
         dataframe = pd.read_csv(file.file, names=['id', 'category', 'text'])
         # print("dataframe information: ", dataframe.head(10))
         output_dict = interface.Analyze_df(dataframe)
-        return Response(content=jsonable_encoder(output_dict), media_type="application/json")
+        return {"output": output_dict}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8080)

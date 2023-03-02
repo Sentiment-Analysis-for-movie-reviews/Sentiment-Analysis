@@ -20,8 +20,8 @@ def Analyze_df(df: pd.DataFrame) -> pd.DataFrame:
     # Whether to modify the DataFrame rather than creating a new one.
     df.set_index('id', inplace=True)
 
-    df = df[~df.category.str.contains("\|")]
-    df = df[df.category != 'nocode']
+    # df = df[~df.category.str.contains("\|")]
+    # df = df[df.category != 'nocode']
     possible_labels = df.category.unique()
     label_dict = {}
 

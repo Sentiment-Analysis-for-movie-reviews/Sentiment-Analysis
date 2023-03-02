@@ -55,7 +55,7 @@ class Get_prediction:
 
         input_ids = encoded_review['input_ids'].to(self.device)
         attention_mask = encoded_review['attention_mask'].to(self.device)
-        class_names = ["happy","not-relevant","angry","surprise","sad", "disgust"]
+        # class_names = ["happy","not-relevant","angry","surprise","sad", "disgust"]
 
         output = model(input_ids, attention_mask)
 
