@@ -6,5 +6,5 @@ checkpoints/
 visualization/model/
 visualization/checkpoints/
 visualization/data/
-./*.ipynb
-./nohup.out
+*.ipynb
+nohup.out
