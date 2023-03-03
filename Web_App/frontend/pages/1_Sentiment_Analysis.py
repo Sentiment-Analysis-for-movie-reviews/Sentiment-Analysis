@@ -11,7 +11,7 @@ if st.button("Submit"):
     if review_text:
         files = {"file": ("review.txt", review_text)}
         try:
-            response = requests.post(f"http://backend:8080/{epoch}", files=files)
+            response = requests.post(f"http://0.0.0.0:8080/{epoch}", files=files)
             response.raise_for_status()
             prediction = response.json()
             st.write(f'Review text: {review_text}')

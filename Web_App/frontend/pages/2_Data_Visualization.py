@@ -10,7 +10,7 @@ if st.button("Submit"):
     if uploaded_file:
         files = {"file": uploaded_file.getvalue()}
         try:
-            response = requests.post(f"http://backend:8080/{data_visualization}", files=files)
+            response = requests.post(f"http://0.0.0.0:8080/{data_visualization}", files=files)
             response.raise_for_status()
             dataframe_list = response.json().get("output")
             # st.write("type from response json: ", type(dataframe_list))

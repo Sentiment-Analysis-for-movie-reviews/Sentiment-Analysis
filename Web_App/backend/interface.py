@@ -51,7 +51,7 @@ def inference(review_text, No):
     model_name = f"./checkpoints/Bert_ft_epoch{No}.model"
     label_dict = {0: 'joy', 1: 'sadness', 2: 'superise', 3: 'disgust', 4: 'anger', 5: 'fear', 6: 'trust', 7: 'anticipation'}
     model = BERT_Pretrained_Model(label_dict)
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cpu')
     model.load_state_dict(torch.load(model_name, map_location=torch.device(device=device)))
     tokenizer = BertTokenizer.from_pretrained(
             'bert-base-uncased',
