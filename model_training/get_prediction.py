@@ -1,16 +1,17 @@
 import torch
 
+"""This script allows to get label prediction"""
 
 class Get_prediction:
-    def __init__(self, review_text: str, tokenizer, device):
-        self.review_text = review_text
+    def __init__(self, input_text: str, tokenizer, device):
+        self.input_input_text = input_text
         self.tokenizer = tokenizer
         self.device = device
 
 
     def get_label(self, model):
-        encoded_review = self.tokenizer.encode_plus(
-            self.review_text,
+        encoded_input_text = self.tokenizer.encode_plus(
+            self.input_text,
             max_length=256,
             add_special_tokens=True,
             return_token_type_ids=False,
@@ -19,8 +20,8 @@ class Get_prediction:
             return_tensors='pt',
         )
 
-        input_ids = encoded_review['input_ids'].to(self.device)
-        attention_mask = encoded_review['attention_mask'].to(self.device)
+        input_ids = encoded_input_text['input_ids'].to(self.device)
+        attention_mask = encoded_input_text['attention_mask'].to(self.device)
         # class_names = ["happy","not-relevant","angry","surprise","sad", "disgust"]
 
         output = model(input_ids, attention_mask)
