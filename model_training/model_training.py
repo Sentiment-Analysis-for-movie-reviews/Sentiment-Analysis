@@ -40,7 +40,7 @@ def get_df(filepath: str) -> pd.DataFrame:
     df = pd.read_csv(filepath, delimiter=',')
     df = df.drop(0)
     df.insert(0, 'id', range(len(df)), allow_duplicates= False)
-    df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
+    df = df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
     # df = pd.read_csv(filepath,
     #     names=['id', 'category', 'text'])
 
