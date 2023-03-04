@@ -18,6 +18,9 @@ def BERT_Pretrained_Model(label_dict: dict):
 def Analyze_df(df: pd.DataFrame) -> pd.DataFrame:
     # Task 1: Exploratory Data Analysis and Preprocessing
     # Whether to modify the DataFrame rather than creating a new one.
+    df = df.drop(0)
+    df.insert(0, 'id', range(len(df)), allow_duplicates= False)
+    df = df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
     df.set_index('id', inplace=True)
 
     # df = df[~df.category.str.contains("\|")]

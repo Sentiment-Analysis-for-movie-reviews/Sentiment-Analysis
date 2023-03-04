@@ -18,7 +18,7 @@ def read_root():
 
 @app.post("/visualization")
 def label_visualization(file: UploadFile = File(...)):
-    dataframe = pd.read_csv(file.file, names=['id', 'category', 'text'])
+    dataframe = pd.read_csv(file.file, delimiter = ',')
     # print("dataframe information: ", dataframe.head(10))
     output_dict = interface.Analyze_df(dataframe)
     return {"output": output_dict}

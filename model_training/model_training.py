@@ -35,8 +35,14 @@ def get_df(filepath: str) -> pd.DataFrame:
     if not os.path.exists(filepath):
         print("Path Error, Please make sure input right path of dataset")
         exit()
-    df = pd.read_csv(filepath,
-        names=['id', 'category', 'text'])
+
+    # Process the training dataset
+    df = pd.read_csv(filepath, delimiter=',')
+    df = df.drop(0)
+    df.insert(0, 'id', range(len(df)), allow_duplicates= False)
+    df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
+    # df = pd.read_csv(filepath,
+    #     names=['id', 'category', 'text'])
 
     # Whether to modify the DataFrame rather than creating a new one.
     df.set_index('id', inplace=True)
