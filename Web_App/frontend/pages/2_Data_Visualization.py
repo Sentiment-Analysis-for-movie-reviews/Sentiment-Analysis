@@ -5,12 +5,13 @@ import pandas as pd
 uploaded_file = st.file_uploader("Please update the file that you want to analyze")
 st.caption("Attention, the acceptable formats are CSV, TSV and Excel")
 
-data_visualization = 12
+data_visualization = "visualization"
 if st.button("Submit"):
     if uploaded_file:
         files = {"file": uploaded_file.getvalue()}
         try:
-            response = requests.post(f"http://0.0.0.0:8080/{data_visualization}", files=files)
+            response = requests.post(f"http://0.0.0.0:8080/visualization", files=files)
+            print(type(response))
             response.raise_for_status()
             dataframe_list = response.json().get("output")
             # st.write("type from response json: ", type(dataframe_list))

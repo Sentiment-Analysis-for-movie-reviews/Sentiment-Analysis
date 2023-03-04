@@ -5,7 +5,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
 # from .model_training import *
-from model_training.model_training import get_df, encode_data, Data_loaders, BERT_Pretrained_Model, evaluate, tokenizer
+from model_training import get_df, encode_data, Data_loaders, BERT_Pretrained_Model, evaluate, tokenizer
 from transformers import BertTokenizer
 
 

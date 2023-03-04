@@ -9,9 +9,10 @@ review_text = st.text_input("Please enter a movie review that you want to analyz
 epoch = st.selectbox("Choose the epoch ", [i for i in range(1, 11)])
 if st.button("Submit"):
     if review_text:
-        files = {"file": ("review.txt", review_text)}
+        # files = {"file": ("review.txt", review_text)}
+        data = {"review": review_text}
         try:
-            response = requests.post(f"http://0.0.0.0:8080/{epoch}", files=files)
+            response = requests.post(f"http://0.0.0.0:8080/sentiment_classification/{epoch}", json=data)
             response.raise_for_status()
             prediction = response.json()
             st.write(f'Review text: {review_text}')
