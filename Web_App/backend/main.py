@@ -1,9 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
 import pandas as pd
-from fastapi import File, UploadFile, Response
-from fastapi.encoders import jsonable_encoder
-import json
+from fastapi import File, UploadFile
+
 
 # import inference
 import interface
@@ -35,5 +34,5 @@ def get_sentiment(epoch: int, text:dict):
 
 
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8080)
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", host="0.0.0.0", port=8080)

@@ -19,7 +19,7 @@ if st.button("Submit"):
             dataframe = pd.DataFrame(dataframe_list)
             # st.write("change type from response json: ", type(dataframe))
             st.write(dataframe.head(10))
-            st.write(dataframe.info())
+            # st.write(dataframe.info)
             fig = px.histogram(dataframe, x="category")
 
             # Display the plot using Streamlit

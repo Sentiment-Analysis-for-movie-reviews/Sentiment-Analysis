@@ -15,7 +15,7 @@ from transformers import BertForSequenceClassification
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
 
 from transformers import AdamW, get_linear_schedule_with_warmup
-
+from get_prediction import Get_prediction
 import numpy as np
 from sklearn.metrics import f1_score
 import os
@@ -27,7 +27,7 @@ import streamlit as st
 
 
 epochs = 10
-filepath = './../data/Black_dataset.csv'
+filepath = './../data/training-dataset.csv'
 
 
 def get_df(filepath: str) -> pd.DataFrame:
@@ -43,7 +43,7 @@ def get_df(filepath: str) -> pd.DataFrame:
     df = df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
     # df = pd.read_csv(filepath,
     #     names=['id', 'category', 'text'])
-
+    # print(df.head(10))
     # Whether to modify the DataFrame rather than creating a new one.
     df.set_index('id', inplace=True)
     possible_labels = df.category.unique()
@@ -354,7 +354,7 @@ if __name__=="__main__":
     # training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=model)
 
     accuracy_per_class = load_and_evaluate_our_model(dataloader_val)
-    print(accuracy_per_class)
+    # print(accuracy_per_class)
 
 
     get_prediction = Get_prediction(review_text="Review text: # optimizer is for setting the learning rate, Adam Learning rate is a way to optimize our learning rate", tokenizer=tokenizer, device=device)
