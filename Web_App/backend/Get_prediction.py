@@ -1,14 +1,15 @@
 import torch
 
+"""This script allows to get label prediction"""
 class Get_prediction:
-    def __init__(self, review_text: str, tokenizer, device):
-        self.review_text = review_text
+    def __init__(self, input_text: str, tokenizer, device):
+        self.input_text = input_text
         self.tokenizer = tokenizer
         self.device = device
 
     def get_label(self, model):
         encoded_review = self.tokenizer.encode_plus(
-            self.review_text,
+            self.input_text,
             max_length=256,
             add_special_tokens=True,
             return_token_type_ids=False,
