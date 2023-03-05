@@ -17,22 +17,19 @@ def read_root():
 
 @app.post("/visualization")
 def label_visualization(file: UploadFile = File(...)):
-    dataframe = pd.read_csv(file.file, delimiter = ',')
-    # print("dataframe information: ", dataframe.head(10))
+    dataframe = pd.read_csv(file.file, names=["id", "category", "text"])
     output_dict = interface.Analyze_df(dataframe)
     return {"output": output_dict}
 
 @app.post("/sentiment_classification/{epoch}")
-def get_sentiment(epoch: int, text:dict):
+def get_sentiment(epoch: int, text: dict):
     if epoch < 11:
-        # review_text = file.file.read().decode("utf-8")
-        review = text["review"]
-        # print(review)
-        output = interface.inference(review_text=review, No=epoch)
-        return {"output": output}
+        input_text = text["input_text"]
+        prediction = interface.inference(input_text=input_text, No=epoch)
+        return {"prediction": prediction}
 
 
 
 
-# if __name__ == "__main__":
-#     uvicorn.run("main:app", host="0.0.0.0", port=8080)
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8080)

@@ -1,11 +1,13 @@
 from transformers import BertForSequenceClassification, BertTokenizer
-from Get_prediction import Get_prediction
-import sklearn
+from Get_prediction import GetPrediction
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import torch
 
+
+
 def BERT_Pretrained_Model(label_dict: dict):
+    """This function allows to load BertForSequenceClassification pretrained model"""
     model = BertForSequenceClassification.from_pretrained(
         'bert-base-uncased',
         num_labels = len(label_dict),
@@ -17,14 +19,7 @@ def BERT_Pretrained_Model(label_dict: dict):
 
 def Analyze_df(df: pd.DataFrame) -> pd.DataFrame:
     # Task 1: Exploratory Data Analysis and Preprocessing
-    # Whether to modify the DataFrame rather than creating a new one.
-    df = df.drop(0)
-    df.insert(0, 'id', range(len(df)), allow_duplicates= False)
-    df = df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
     df.set_index('id', inplace=True)
-
-    # df = df[~df.category.str.contains("\|")]
-    # df = df[df.category != 'nocode']
     possible_labels = df.category.unique()
     label_dict = {}
 
@@ -50,17 +45,16 @@ def Analyze_df(df: pd.DataFrame) -> pd.DataFrame:
 
     return output_dict
 
-def inference(review_text, No):
-    model_name = f"./checkpoints/Bert_ft_epoch{No}.model"
-    label_dict = {0: 'joy', 1: 'sadness', 2: 'superise', 3: 'disgust', 4: 'anger', 5: 'fear', 6: 'trust', 7: 'anticipation'}
+def inference(input_text: str, No: int):
+    model_name = f"Web_App/backend/checkpoints/Bert_ft_epoch{No}.model"
+    label_dict = {0: 'joy', 1: 'sadness', 2: 'surprise', 3: 'disgust', 4: 'anger', 5: 'fear', 6: 'trust', 7: 'anticipation'}
     model = BERT_Pretrained_Model(label_dict)
-    device = torch.device('cpu')
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.load_state_dict(torch.load(model_name, map_location=torch.device(device=device)))
     tokenizer = BertTokenizer.from_pretrained(
             'bert-base-uncased',
             do_lower_case=True
         )
-    get_prediction = Get_prediction(review_text,tokenizer, device)
+    get_prediction = GetPrediction(input_text, tokenizer, device)
     prediction = get_prediction.get_label(model)
-    # print("test the pridcition: ", prediction)
     return prediction

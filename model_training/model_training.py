@@ -2,50 +2,39 @@
 import torch
 import pandas as pd
 from tqdm import tqdm, trange
-
-
-# import tensorflow as tf
 from sklearn.model_selection import train_test_split
-
 from transformers import BertTokenizer
 from torch.utils.data import TensorDataset
-
 from transformers import BertForSequenceClassification
-
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler
-
 from transformers import AdamW, get_linear_schedule_with_warmup
-from get_prediction import Get_prediction
 import numpy as np
 from sklearn.metrics import f1_score
-import os
 import random
-
 import streamlit as st
 
 
+"""This script is dedicated for model training"""
 
-
+# Global variables
 epochs = 10
-filepath = './../data/training-dataset.csv'
+filepath = './../data/Black_dataset.csv'
 
 
 def get_df(filepath: str) -> pd.DataFrame:
+    """
+    This function allows to return a dataframe having 'id','category' and 'text' as columns
+    we used 'smile-annotations-final.csv' to train our model, so we had the preprocessing steps as following, since the new dataset about blacklivesMatter is clean and it's categories are well-balanced, we can still maintain all the preprcossing steps, which won't change the nature of the new dataset
+    """
     # Task 1: Exploratory Data Analysis and Preprocessing
-    if not os.path.exists(filepath):
-        print("Path Error, Please make sure input right path of dataset")
-        exit()
+    df = pd.read_csv(filepath,
+        names=['id', 'category', 'text'])
 
-    # Process the training dataset
-    df = pd.read_csv(filepath, delimiter=',')
-    df = df.drop(0)
-    df.insert(0, 'id', range(len(df)), allow_duplicates= False)
-    df = df.rename(columns={'sentiment':'category', 'tweet_text': 'text'})
-    # df = pd.read_csv(filepath,
-    #     names=['id', 'category', 'text'])
-    # print(df.head(10))
     # Whether to modify the DataFrame rather than creating a new one.
     df.set_index('id', inplace=True)
+
+    df = df[~df.category.str.contains("\|")]
+    df = df[df.category != 'nocode']
     possible_labels = df.category.unique()
     label_dict = {}
 
@@ -66,6 +55,7 @@ def get_df(filepath: str) -> pd.DataFrame:
 
     df.loc[X_train, 'data_type'] = 'train'
     df.loc[X_val, 'data_type'] = 'val'
+
     return df, label_dict
 
 
@@ -73,14 +63,12 @@ def get_df(filepath: str) -> pd.DataFrame:
 # df.groupby(['category', 'label', 'data_type']).count()
 
 # Task 3: Loading Tokenizer and Encoding our Data
-
 def tokenizer():
     tokenizer = BertTokenizer.from_pretrained(
             'bert-base-uncased',
             do_lower_case=True
         )
     return tokenizer
-
 
 
 def encode_data(df, tokenizer):
@@ -120,6 +108,7 @@ def encode_data(df, tokenizer):
 
     return dataset_train, dataset_val
 
+
 # Task 5: Setting up BERT Pretrained Model
 def BERT_Pretrained_Model(label_dict: dict):
     model = BertForSequenceClassification.from_pretrained(
@@ -133,9 +122,8 @@ def BERT_Pretrained_Model(label_dict: dict):
 
 
 # Task 6: Creating Data Loaders
-
 def Data_loaders(dataset_train, dataset_val):
-    batch_size = 32 #32
+    batch_size = 32
     dataloader_train = DataLoader(
         dataset_train,
         sampler=RandomSampler(dataset_train),
@@ -170,7 +158,6 @@ def Optimer_Scheduler_setup(model, dataloader_train):
     return optimizer, scheduler
 
 # Task 8: Defining our Performance Metrics
-
 def f1_score_func(preds, labels):
     preds_flat = np.argmax(preds, axis=1).flatten()
     labels_flat = labels.flatten()
@@ -237,7 +224,7 @@ def evaluate(dataloader_val, model = None):
         loss_val_total += loss.item()
 
         logits = logits.detach().cpu().numpy()
-        # incase you are using a GPU and you want to pull a value onto your cpu in order to use them with numpy
+        # in case you are using a GPU and you want to pull a value onto your cpu in order to use them with numpy
         label_ids = inputs['labels'].cpu().numpy()
         predictions.append(logits)
         true_vals.append(label_ids)
@@ -286,10 +273,7 @@ def training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=Non
             scheduler.step()
             
             progress_bar.set_postfix({'training_loss': '{:.3f}'.format(loss.item()/len(batch))})
-
-        if not os.path.exists('./../checkpoints/'):
-            os.makedirs('./../checkpoints')
-
+        
         torch.save(model.state_dict(), f'./../checkpoints/Bert_ft_epoch{epoch}.model')
         
         tqdm.write(f'\nEpoch {epoch}')
@@ -299,50 +283,33 @@ def training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=Non
         
         # We want to know if our model is overtraining
         val_loss , predictions, true_vals = evaluate(dataloader_val, model=model)
+        # we use f1-score to save the most performing model 
         val_f1 = f1_score_func(predictions, true_vals)
         tqdm.write(f'Validation loss: {val_loss}')
         tqdm.write(f'F1 score (weighted): {val_f1}')
         if val_f1 > best_F1:
             best_F1 = val_f1
-            if not os.path.exists('./../model/'):
-                os.makedirs('./../model')
             torch.save(model.state_dict(), f'./../model/Best_eval.model')
 
-
-# Task 10: Loading and Evaluating our Model
-def load_and_evaluate_our_model(dataloader_val):
-    model = BertForSequenceClassification.from_pretrained(
-        'bert-base-uncased',
-        num_labels = len(label_dict),
-        output_attentions=False,# We don't want any unnecessary input from the model
-        output_hidden_states=False # State just before the prediction, that might be useful for encoding 
-    )
-
-    model.to(device)
-
-    model.load_state_dict(
-        torch.load('./../model/Best_eval.model',
-                map_location=torch.device('cuda')))
-
-    _, predictions, true_vals = evaluate(dataloader_val, model= model)
-
-
-    return accuracy_per_class(predictions, true_vals)
 
 
 
 if __name__=="__main__":
+    # Exploratory Data Analysis and Preprocessing and Training/Validation Split
     df, label_dict = get_df(filepath=filepath)
+
+    # Loading Tokenizer and Encoding our Data
     tokenizer = tokenizer()
     dataset_train, dataset_val = encode_data(df, tokenizer)
 
+    # Setting up BERT Pretrained Model
     model = BERT_Pretrained_Model(label_dict)
-
+    # Creating Data Loaders
     dataloader_train, dataloader_val = Data_loaders(dataset_train, dataset_val)
-
+    # Setting Up Optimizer and Scheduler
     optimizer, scheduler = Optimer_Scheduler_setup(model, dataloader_train)
 
-    # Task 9: Creating our Training Loop
+    # Creating our Training Loop
     seed_val = 17
     random.seed(seed_val)
     np.random.seed(seed_val)
@@ -350,19 +317,4 @@ if __name__=="__main__":
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.to(device)
-
-    # training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=model)
-
-    accuracy_per_class = load_and_evaluate_our_model(dataloader_val)
-    # print(accuracy_per_class)
-
-
-    get_prediction = Get_prediction(review_text="Review text: # optimizer is for setting the learning rate, Adam Learning rate is a way to optimize our learning rate", tokenizer=tokenizer, device=device)
-    get_prediction.get_tokenized_sentence(tokenizer)
-    get_prediction.get_label()
-    print(label_dict)
-
-
-    
-    
-    
+    training_loop(dataloader_train,dataloader_val,optimizer,scheduler, model=model)

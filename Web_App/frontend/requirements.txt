@@ -5,3 +5,4 @@ sklearn
 streamlit == 1.12.0
 protobuf==3.20.1
 plotly
+uvicorn

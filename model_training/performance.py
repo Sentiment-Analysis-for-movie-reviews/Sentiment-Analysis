@@ -4,14 +4,13 @@ from sklearn.metrics import f1_score, classification_report, confusion_matrix, C
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
+from transformers import BertTokenizer
 # from .model_training import *
 from model_training import get_df, encode_data, Data_loaders, BERT_Pretrained_Model, evaluate, tokenizer
-from transformers import BertTokenizer
 
 
-# Task 8: Defining our Performance Metrics
-
-class_names = ["joy","sadness","superise","disgust","anger", "fear", "trust", "anticipation"]
+# Defining our Performance Metrics: this is several methods in ClassificationEvaluation
+class_names = ["joy","sadness","surprise","disgust","anger", "fear", "trust", "anticipation"]
 
 def get_data(filepath: str, model_path: str):
     # Load the dataset
@@ -25,18 +24,24 @@ def get_data(filepath: str, model_path: str):
     dataloader_train, dataloader_val = Data_loaders(dataset_train, dataset_val)
 
     model = BERT_Pretrained_Model(label_dict)
-    model.to("cpu")
+    # If the cuda is available, we use cuda, otherwise we use 'cpu'
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model.to(device)
     model.load_state_dict(
-        torch.load(model_path, map_location=torch.device('cpu')))
+        torch.load(model_path, map_location=torch.device(device)))
 
     # We want to know if our model is overtraining
     val_loss , predictions, true_vals = evaluate(dataloader_val, model=model)
+
     # Flatten the data, cuz the predictions are composed of float numbers
-    # which can not be compared with y_trues which vary from 0 to 5
+    # which can not be compared with y_trues which vary from 0 to 8
     y_preds = np.argmax(predictions, axis=1).flatten()
     y_trues = true_vals.flatten()
     return y_preds, y_trues, model, label_dict
 
+"""
+We set up several performance metrics here, since the categories of movie review dataset are not balanced, so we previleged to use the method 'accuracy_per_class' to evaluate the model performance, while the categories of BlackLivesMatter and we previlege to get a classification report and confusion matrix
+"""
 class ClassificationEvaluation:
     def __init__(self, y_preds, y_trues):
         self.y_preds = y_preds
@@ -86,22 +91,21 @@ class ClassificationEvaluation:
 
         fig.tight_layout()
         plt.show()
-        plt.savefig('./../eval/confusion_matrix.png')
+        plt.savefig('eval/confusion_matrix.png')
+        # eval
 
         print('Classification report is being sent into eval/classification-report.txt...')
-        with open('./../eval/classification-report.txt', 'w') as f:
+        with open('eval/classification-report.txt', 'w') as f:
             f.write(f'{classification_report(self.y_trues, self.y_preds, target_names=class_names)}')
 
 
 if __name__=="__main__":
-    # filepath="/Users/liupan/Desktop/Cours/M2_S2/réseau_de_neurones/project/Sentiment_Analysis/smile-annotations-final.csv"
-    # model_path = '/Users/liupan/Desktop/Cours/M2_S2/réseau_de_neurones/Sentiment-Analysis/Bert_ft_epoch10.model'
-    filepath = "./../data/Black_dataset.csv"
-    model_path = "./../model/Best_eval.model"
+    # Task 10: Loading and Evaluating our Model
+    filepath = "data/Black_dataset.csv"
+    model_path = "model/Best_eval.model"
     y_preds, y_trues, model, label_dict = get_data(filepath=filepath, model_path=model_path)
 
     classificationEvaluation = ClassificationEvaluation(y_preds, y_trues)
+    # because the dataset we used is not balanced, there are much more "happy", so we decided to get the accuracy for each label
     classificationEvaluation.accuracy_per_class(preds = y_preds, labels = y_trues, label_dict=label_dict)
     classificationEvaluation.get_classification_report_confusion_matrix()
-
-
