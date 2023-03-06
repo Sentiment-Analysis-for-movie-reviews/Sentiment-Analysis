@@ -2,8 +2,22 @@ import streamlit as st
 import plotly.express as px
 import requests
 import pandas as pd
-uploaded_file = st.file_uploader("Please update the file that you want to analyze")
-st.caption("Attention, the acceptable formats are CSV, TSV and Excel")
+from PIL import Image
+
+st.subheader("This page shows the model performance and label distribution of our dataset")
+if st.button("Performance of the best model"):
+    image = Image.open('eval/confusion_matrix.png')
+    st.image(image)
+    with open('eval/classification-report.txt', 'r') as file:
+        classification_report = file.read()
+        st.caption("Here is the classification report:")
+        st.text(classification_report)
+        st.write("---------")
+
+uploaded_file = st.file_uploader("Please upload **Black_dataset.csv** to show label distribution")
+st.caption("Attention, **Black_dataset.csv** is the only file that can be processed")
+
+
 
 data_visualization = "visualization"
 if st.button("Submit"):

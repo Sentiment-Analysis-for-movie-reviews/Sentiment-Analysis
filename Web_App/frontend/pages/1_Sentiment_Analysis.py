@@ -15,7 +15,7 @@ if st.button("Submit"):
             response.raise_for_status()
             prediction = response.json()
             st.write(f'Input text: {input_text}')
-            st.write(f'Sentiment  : {prediction.get("prediction")}')
+            st.write(f'Sentiment prediction: {prediction.get("prediction")}')
         except requests.exceptions.HTTPError as err:
             st.error(f"HTTP error occurred: {err}")
             st.error(response.content)
