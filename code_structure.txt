@@ -1,0 +1,33 @@
+.
+├── Web_App
+│   ├── backend
+│   │   ├── Get_prediction.py
+│   │   ├── __init__.py
+│   │   ├── checkpoints
+│   │   │   ├── Bert_ft_epoch1.model
+│   │   │   └── Bert_ft_epoch10.model
+│   │   ├── interface.py
+│   │   └── main.py
+│   └── frontend
+│       ├── Hello.py
+│       ├── __init__.py
+│       └── pages
+│           ├── 1_Sentiment_Analysis.py
+│           ├── 2_Data_Visualization.py
+│           └── 3_About us.py
+├── code_structure.txt
+├── data
+│   ├── Black_dataset.csv
+│   ├── data_preparation.py
+│   └── training-dataset.csv
+├── eval
+│   ├── classification-report.txt
+│   └── confusion_matrix.png
+├── model
+│   └── Best_eval.model
+├── model_training
+│   ├── __init__.py
+│   ├── model_training.py
+│   └── performance.py
+├── readme.md
+└── requirements.txt
