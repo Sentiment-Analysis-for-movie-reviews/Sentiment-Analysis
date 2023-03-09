@@ -51,6 +51,7 @@ def inference(input_text: str, No: int):
     model = BERT_Pretrained_Model(label_dict)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.load_state_dict(torch.load(model_name, map_location=torch.device(device=device)))
+    model.to(device)
     tokenizer = BertTokenizer.from_pretrained(
             'bert-base-uncased',
             do_lower_case=True
