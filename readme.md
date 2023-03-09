@@ -3,7 +3,7 @@ Sentiment-Analysis
 
 Our project aims to analyze people's emotions about the Black lives social movement. We use the [BlackLivesMatter Tweet Dataset](https://www.kaggle.com/datasets/carlsonhoo/baselinedataset) .
 
-Contact : [<liupan.lucine@gmail.com>](mailto:liupan.lucine@gmail.com), [<ireneobasogie97@gmail.com>](mailto:ireneobasogie97@gmail.com)
+Contact : [<liupan.lucine@gmail.com>](mailto:liupan.lucine@gmail.com), [<irene_obasogie@hotmail.com>](mailto:irene_obasogie@hotmail.com)
 
 ## Requirements
 
