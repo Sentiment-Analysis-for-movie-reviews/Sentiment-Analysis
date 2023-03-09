@@ -31,7 +31,7 @@ Lastly, we attempted to use Docker for containerization but found it unnecessary
 
 The image below shows our code's structure:
 
-<img title="" src="file:///Users/liupan/Library/Application%20Support/marktext/images/2023-03-07-18-42-23-image.png" alt="" width="221" data-align="center">
+<img title="" src="code_structure.png" alt="" width="221" data-align="center">
 
 **Usage**
 To use the Sentiment Analysis Project, follow these steps:
@@ -111,7 +111,7 @@ In the page "Technical Documentation", you will find the technical documentation
 
 We got an accuracy of 0.85. More evaluation metrics can be found in the classification report below.
 
-<img title="" src="file:///Users/liupan/Library/Application%20Support/marktext/images/2023-03-07-18-28-27-image.png" alt="" width="383" data-align="center">
+<img title="" src="eval/classification_report.png" alt="" width="383" data-align="center">
 
 Confusion Matrix
 
