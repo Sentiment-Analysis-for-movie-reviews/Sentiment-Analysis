@@ -115,7 +115,7 @@ We got an accuracy of 0.85. More evaluation metrics can be found in the classifi
 
 Confusion Matrix
 
-<img title="" src="file:///Users/liupan/Desktop/Cours/M2_S2/réseau_de_neurones/project/new_dataset/Sentiment-Analysis/eval/confusion_matrix.png" alt="" width="439" data-align="center">
+<img title="" src="eval/confusion_matrix.png" alt="" width="439" data-align="center">
 
 #### Conclusion
 
